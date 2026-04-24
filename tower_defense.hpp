@@ -9,6 +9,8 @@
 #include <chrono>
 #include <ctime>
 #include <thread>
+#include <random>
+#include <limits>
 using namespace std;
 
 ALLEGRO_BITMAP* dirt = nullptr;
@@ -19,12 +21,15 @@ ALLEGRO_BITMAP* archer_img = nullptr;
 ALLEGRO_BITMAP* farm_img = nullptr;
 ALLEGRO_BITMAP* summoner_img = nullptr;
 ALLEGRO_BITMAP* cat_img = nullptr;
+ALLEGRO_BITMAP* menu = nullptr;
 ALLEGRO_FONT* font = nullptr;
-
+bool is_playing = false;
 static const int CELL = 32;
 static const int GCOLS = 20;
 static const int GROWS = 8;
-
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<int> dist(1,100);
 
 static const int MAP1[GROWS][GCOLS] = {
     {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -319,7 +324,7 @@ struct Tower {
             if (atacTimer <= 0) {
                 Vrag* v = blizhaishiy(vragi, 100);
                 if (v) {
-                    shary.emplace_back(cx(), cy(), v->x, v->y, 2, 40.0f);
+                    shary.emplace_back(cx(), cy(), v->x, v->y, 2, 40.0);
                     atacTimer = 1.5;
                 }
             }
@@ -327,13 +332,16 @@ struct Tower {
             if (atacTimer <= 0) {
                 Vrag* v = blizhaishiy(vragi, 120);
                 if (v) {
-                    streli.emplace_back(cx(), cy(), v, 1);
+                    streli.emplace_back(cx(), cy(), v, 3);
                     atacTimer = 0.8;
                 }
             }
         } else if (type == FARM) {
             if (farmTimer <= 0) {
-                dengi += 5;
+                if(dist(gen) == 67){
+                    dengi +=67;
+                }
+                dengi += 6;
                 farmTimer = 5.0;
             }
         } else if (type == SUMMONER) {
@@ -428,6 +436,7 @@ public:
         farm_img    = al_load_bitmap("Game/sprites/Farm.bmp");
         summoner_img= al_load_bitmap("Game/sprites/Summoner.bmp");
         cat_img     = al_load_bitmap("Game/sprites/Summon.bmp");
+        menu     = al_load_bitmap("Game/Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
     }
@@ -518,10 +527,7 @@ public:
             proigrysh = true;
         }
     }
-
-    void render_process() override {
-        load_assets();
-
+    void MGame(){
         for (int r = 0; r < GROWS; r++)
             for (int c = 0; c < GCOLS; c++)
                 if (CURRENT_MAP[r][c] == 1)
@@ -617,6 +623,7 @@ public:
                 al_draw_text(font, al_map_rgb(200,200,200),
                     320, 145, ALLEGRO_ALIGN_CENTER, buf);
             }
+            al_draw_filled_rectangle(0, 0, 640, 360, al_map_rgb(0,0,0));
             this_thread::sleep_for(chrono::seconds(5));
             Engine::stop();
         }
@@ -624,7 +631,7 @@ public:
         if (pobeda) {
             al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
             al_draw_rectangle(130, 90, 510, 185, al_map_rgb(50,255,100), 3);
-            if (font) {
+            if (font){
                 al_draw_text(font, al_map_rgb(50,255,100),
                     320, 110, ALLEGRO_ALIGN_CENTER, "You Win!");
                 al_draw_text(font, al_map_rgb(200,200,200),
@@ -634,8 +641,34 @@ public:
                 al_draw_text(font, al_map_rgb(255,230,100),
                     320, 155, ALLEGRO_ALIGN_CENTER, buf);
             }
+            al_draw_filled_rectangle(0, 0, 640, 360, al_map_rgb(0,0,0));
             this_thread::sleep_for(chrono::seconds(5));
             Engine::stop();
         }
+
+
+    }
+    void Menu(){
+        al_draw_bitmap(menu,0, 0, 0);
+
+        /*ALLEGRO_TRANSFORM tr;
+        al_draw_filled_rectangle(0,0,640,360,al_map_rgb(189, 107, 0));
+        al_draw_rectangle(3,3,125,69,al_map_rgb(94, 53, 0),3);
+        al_identity_transform(&tr);
+
+        al_scale_transform(&tr, 5,5);
+        al_use_transform(&tr);
+        al_draw_text(font, al_map_rgb(255,255,255),65,10, ALLEGRO_ALIGN_CENTER, "TD++");
+        al_draw_filled_rounded_rectangle(50, 30, 80, 40, 4, 4, al_map_rgb(0,0,0));*/
+
+    }
+    void render_process() override {
+        load_assets();
+        Menu();
+        if(is_playing){
+            MGame();
+        }
+
+
     }
 };
