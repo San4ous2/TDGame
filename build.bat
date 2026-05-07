@@ -1,0 +1,11 @@
+g++ main-1.cpp engine.cpp ^
+-o program.exe ^
+-std=c++17 ^
+-Iallegro/include ^
+-Lallegro/lib ^
+-lallegro ^
+-lallegro_main ^
+-lallegro_primitives ^
+-lallegro_image ^
+-lallegro_font ^
+-lallegro_ttf

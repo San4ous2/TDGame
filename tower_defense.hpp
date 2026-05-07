@@ -23,7 +23,7 @@ ALLEGRO_BITMAP* summoner_img = nullptr;
 ALLEGRO_BITMAP* cat_img = nullptr;
 ALLEGRO_BITMAP* menu = nullptr;
 ALLEGRO_FONT* font = nullptr;
-bool is_playing = false;
+bool is_playing = true;
 static const int CELL = 32;
 static const int GCOLS = 20;
 static const int GROWS = 8;
@@ -428,15 +428,15 @@ public:
 
     void load_assets() {
         if (assets_loaded) return;
-        vrag_img    = al_load_bitmap("Game/sprites/Vrag.bmp");
-        dirt        = al_load_bitmap("Game/sprites/Dirt.bmp");
-        grass       = al_load_bitmap("Game/sprites/Grass.bmp");
-        wizard_img  = al_load_bitmap("Game/sprites/Wizard.bmp");
-        archer_img  = al_load_bitmap("Game/sprites/Archer.bmp");
-        farm_img    = al_load_bitmap("Game/sprites/Farm.bmp");
-        summoner_img= al_load_bitmap("Game/sprites/Summoner.bmp");
-        cat_img     = al_load_bitmap("Game/sprites/Summon.bmp");
-        menu     = al_load_bitmap("Game/Menu.bmp");
+        vrag_img    = al_load_bitmap("sprites/Vrag.bmp");
+        dirt        = al_load_bitmap("sprites/Dirt.bmp");
+        grass       = al_load_bitmap("sprites/Grass.bmp");
+        wizard_img  = al_load_bitmap("sprites/Wizard.bmp");
+        archer_img  = al_load_bitmap("sprites/Archer.bmp");
+        farm_img    = al_load_bitmap("sprites/Farm.bmp");
+        summoner_img= al_load_bitmap("sprites/Summoner.bmp");
+        cat_img     = al_load_bitmap("sprites/Summon.bmp");
+        menu     = al_load_bitmap("Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
     }
