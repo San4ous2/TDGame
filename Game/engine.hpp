@@ -20,14 +20,13 @@ class Engine {
     inline static bool initialized = false;
     bool stopped = true;
     ALLEGRO_TIMER *timer = nullptr;
-    ALLEGRO_DISPLAY *display = nullptr;
     ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
 
   protected:
     // Color that fills the screen before `render_process`
     // SEE: `full_redraw` for more info
     ALLEGRO_COLOR bg_color = {0, 0, 0, 0};
-
+    ALLEGRO_DISPLAY *display = nullptr;
     // TRUE: before each `render_process` screen is filled with `bg_color`
     // FALSE: screen remains unchanged before `render_process`
     // NOTE: can be used, to skip `render_process` if there is nothing to render

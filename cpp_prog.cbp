@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="cpp_prog" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/cpp_prog" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="allegro/include" />
+				</Compiler>
+				<Linker>
+					<Add library="allegro/lib/liballegro_primitives.dll.a" />
+					<Add library="allegro/lib/liballegro.dll.a" />
+					<Add library="allegro/lib/liballegro_main.dll.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/cpp_prog" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Game/Menu.bmp" />
+		<Unit filename="Game/engine.cpp" />
+		<Unit filename="Game/engine.hpp" />
+		<Unit filename="Game/main-1.cpp" />
+		<Unit filename="Game/sprites/Archer.bmp" />
+		<Unit filename="Game/sprites/Dirt.bmp" />
+		<Unit filename="Game/sprites/Farm.bmp" />
+		<Unit filename="Game/sprites/Grass.bmp" />
+		<Unit filename="Game/sprites/Summon.bmp" />
+		<Unit filename="Game/sprites/Summoner.bmp" />
+		<Unit filename="Game/sprites/Vrag.bmp" />
+		<Unit filename="Game/sprites/Wizard.bmp" />
+		<Unit filename="Game/tower_defense.hpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

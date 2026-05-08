@@ -1,0 +1,520 @@
+# depslib dependency file v1.0
+1769795964 source:d:\aleksandrs abbas\c++ sem\cpp_prog\allegroutil.cpp
+	"AllegroUtil.hpp"
+	<iostream>
+
+1769795964 d:\aleksandrs abbas\c++ sem\cpp_prog\allegroutil.hpp
+	<allegro5/allegro.h>
+	<allegro5/allegro_primitives.h>
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\allegro.h
+	"allegro5/base.h"
+	"allegro5/altime.h"
+	"allegro5/bitmap.h"
+	"allegro5/bitmap_draw.h"
+	"allegro5/bitmap_io.h"
+	"allegro5/bitmap_lock.h"
+	"allegro5/blender.h"
+	"allegro5/clipboard.h"
+	"allegro5/color.h"
+	"allegro5/config.h"
+	"allegro5/cpu.h"
+	"allegro5/debug.h"
+	"allegro5/display.h"
+	"allegro5/drawing.h"
+	"allegro5/error.h"
+	"allegro5/events.h"
+	"allegro5/file.h"
+	"allegro5/fixed.h"
+	"allegro5/fmaths.h"
+	"allegro5/fshook.h"
+	"allegro5/fullscreen_mode.h"
+	"allegro5/haptic.h"
+	"allegro5/joystick.h"
+	"allegro5/keyboard.h"
+	"allegro5/memory.h"
+	"allegro5/monitor.h"
+	"allegro5/mouse.h"
+	"allegro5/mouse_cursor.h"
+	"allegro5/path.h"
+	"allegro5/render_state.h"
+	"allegro5/shader.h"
+	"allegro5/system.h"
+	"allegro5/threads.h"
+	"allegro5/timer.h"
+	"allegro5/tls.h"
+	"allegro5/touch_input.h"
+	"allegro5/transformations.h"
+	"allegro5/utf8.h"
+	"allegro5/alcompat.h"
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\base.h
+	<errno.h>
+	<limits.h>
+	<limits.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<sys/types.h>
+	<fortify/fortify.h>
+	<dmalloc.h>
+	"allegro5/internal/alconfig.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\internal\alconfig.h
+	"allegro5/platform/alplatf.h"
+	"allegro5/platform/alwatcom.h"
+	"allegro5/platform/almngw32.h"
+	"allegro5/platform/albcc32.h"
+	"allegro5/platform/almsvc.h"
+	"allegro5/platform/aliphonecfg.h"
+	"allegro5/platform/alosxcfg.h"
+	"allegro5/platform/alandroidcfg.h"
+	"allegro5/platform/alraspberrypicfg.h"
+	"allegro5/platform/alucfg.h"
+	"allegro5/platform/allegro_sdl_config.h"
+	"allegro5/platform/astdint.h"
+	"allegro5/platform/astdbool.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alplatf.h
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alwatcom.h
+	<io.h>
+	<i86.h>
+	<conio.h>
+	<fcntl.h>
+	<direct.h>
+	<malloc.h>
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\almngw32.h
+	<io.h>
+	<fcntl.h>
+	<direct.h>
+	<malloc.h>
+	"allegro5/platform/alplatf.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\albcc32.h
+	<io.h>
+	<fcntl.h>
+	<direct.h>
+	<malloc.h>
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\almsvc.h
+	<io.h>
+	<fcntl.h>
+	<direct.h>
+	<malloc.h>
+	"allegro5/platform/alplatf.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\aliphonecfg.h
+	<fcntl.h>
+	<unistd.h>
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alosxcfg.h
+	"allegro5/platform/alplatf.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alandroidcfg.h
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alraspberrypicfg.h
+	<fcntl.h>
+	<unistd.h>
+	<sys/types.h>
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alucfg.h
+	<fcntl.h>
+	<unistd.h>
+	"alunix.h"
+	"allegro5/platform/alplatf.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\alunix.h
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\allegro_sdl_config.h
+	<fcntl.h>
+	<unistd.h>
+
+1769799567 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\astdint.h
+	<inttypes.h>
+	<stdint.h>
+	<limits.h>
+
+1769799567 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\platform\astdbool.h
+	<stdbool.h>
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\altime.h
+	"allegro5/base.h"
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\bitmap.h
+	"allegro5/color.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\color.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\bitmap_draw.h
+	"allegro5/bitmap.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\bitmap_io.h
+	"allegro5/bitmap.h"
+	"allegro5/file.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\file.h
+	"allegro5/base.h"
+	"allegro5/path.h"
+	"allegro5/utf8.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\path.h
+	"allegro5/base.h"
+	"allegro5/utf8.h"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\utf8.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\bitmap_lock.h
+	"allegro5/bitmap.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\blender.h
+	"allegro5/base.h"
+	"allegro5/color.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\clipboard.h
+	"allegro5/base.h"
+	"allegro5/display.h"
+	"allegro5/utf8.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\display.h
+	"allegro5/bitmap.h"
+	"allegro5/color.h"
+	"allegro5/events.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\events.h
+	"allegro5/altime.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\config.h
+	"allegro5/file.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\cpu.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\debug.h
+	<assert.h>
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\drawing.h
+	"allegro5/color.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\error.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\fixed.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\fmaths.h
+	"allegro5/base.h"
+	"allegro5/fixed.h"
+	"allegro5/inline/fmaths.inl"
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\inline\fmaths.inl
+	"allegro5/error.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\fshook.h
+	"allegro5/base.h"
+	"allegro5/file.h"
+	"allegro5/path.h"
+	<sys/types.h>
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\fullscreen_mode.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\haptic.h
+	"allegro5/base.h"
+	"allegro5/display.h"
+	"allegro5/events.h"
+	"allegro5/joystick.h"
+	"allegro5/keyboard.h"
+	"allegro5/mouse.h"
+	"allegro5/touch_input.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\joystick.h
+	"allegro5/base.h"
+	"allegro5/events.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\keyboard.h
+	"allegro5/base.h"
+	"allegro5/events.h"
+	"allegro5/keycodes.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\keycodes.h
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\mouse.h
+	"allegro5/base.h"
+	"allegro5/events.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\touch_input.h
+	"allegro5/base.h"
+	"allegro5/events.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\memory.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\monitor.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\mouse_cursor.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\render_state.h
+	"allegro5/base.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\shader.h
+	"allegro5/base.h"
+	"allegro5/transformations.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\transformations.h
+	"allegro5/display.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\system.h
+	"allegro5/config.h"
+	"allegro5/path.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\threads.h
+	"allegro5/altime.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\timer.h
+	"allegro5/base.h"
+	"allegro5/events.h"
+
+1769799565 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\tls.h
+	"allegro5/base.h"
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\alcompat.h
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\allegro_primitives.h
+	<allegro5/allegro.h>
+	<allegro5/internal/aintern_primitives_types.h>
+
+1769799566 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\internal\aintern_primitives_types.h
+
+1770394261 source:d:\aleksandrs abbas\c++ sem\cpp_prog\main.cpp
+	<iostream>
+	"AllegroUtil.hpp"
+	<cstdlib>
+	<cstdio>
+
+1771002748 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\surs.cpp
+
+1769795964 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\allegroutil.cpp
+	"AllegroUtil.hpp"
+	<iostream>
+
+1769795964 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\allegroutil.hpp
+	<allegro5/allegro.h>
+	<allegro5/allegro_primitives.h>
+
+1771004898 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\shape.cpp
+	"Shape.hpp"
+	<iostream>
+	"AllegroUtil.hpp"
+
+1771007294 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\shape.hpp
+	<iostream>
+	"IDrawable.hpp"
+	"IResizable.hpp"
+
+1771005346 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\circle.cpp
+	"Circle.hpp"
+	<iostream>
+	"AllegroUtil.hpp"
+
+1771007364 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\circle.hpp
+	<iostream>
+	"Shape.hpp"
+
+1771005355 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\square.cpp
+	"Square.hpp"
+	<iostream>
+	"AllegroUtil.hpp"
+
+1771007349 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\square.hpp
+	<iostream>
+	"Shape.hpp"
+
+1771006146 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\allegromp.cpp
+	<iostream>
+	"AllegroUtil.hpp"
+	<windows.h>
+	<cstdlib>
+	<cstdio>
+	"Circle.hpp"
+	"Shape.hpp"
+	"Square.hpp"
+	"IResizable.hpp"
+	"IDrawable.hpp"
+
+1771005567 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\iresizable.hpp
+	<iostream>
+
+1771006577 d:\aleksandrs abbas\c++ sem\cpp_prog\les4\idrawable.hpp
+	<iostream>
+
+1771006312 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les4\main.cpp
+	<iostream>
+	"AllegroUtil.hpp"
+	<cstdlib>
+	<cstdio>
+	"Circle.hpp"
+	"Shape.hpp"
+	"Square.hpp"
+	"IResizable.hpp"
+	"IDrawable.hpp"
+
+1771604878 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les5\test.cpp
+	<iostream>
+
+1769795964 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les5\allegroutil.cpp
+	"AllegroUtil.hpp"
+	<iostream>
+
+1769795964 d:\aleksandrs abbas\c++ sem\cpp_prog\les5\allegroutil.hpp
+	<allegro5/allegro.h>
+	<allegro5/allegro_primitives.h>
+
+1771610630 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les5\engine.cpp
+	"engine.hpp"
+	<iostream>
+
+1771611275 d:\aleksandrs abbas\c++ sem\cpp_prog\les5\engine.hpp
+	<allegro5/allegro_primitives.h>
+	<allegro5/color.h>
+	<allegro5/display.h>
+	<allegro5/events.h>
+	<allegro5/keyboard.h>
+	<allegro5/mouse.h>
+	<allegro5/system.h>
+	<allegro5/timer.h>
+	<cstddef>
+	<functional>
+
+1771610402 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les5\allegromp.cpp
+	<iostream>
+	"AllegroUtil.hpp"
+	<windows.h>
+	<cstdlib>
+	<cstdio>
+	<cstdlib>
+	<ctime>
+	"engine.hpp"
+
+1772812218 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les6\engine.cpp
+	"engine.hpp"
+	<iostream>
+	<allegro5/allegro.h>
+	<allegro5/allegro_image.h>
+	<stdexcept>
+
+1772811911 d:\aleksandrs abbas\c++ sem\cpp_prog\les6\engine.hpp
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_primitives.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/color.h>
+	<allegro5/events.h>
+	<allegro5/keyboard.h>
+	<allegro5/mouse.h>
+	<allegro5/system.h>
+	<allegro5/timer.h>
+	<cstddef>
+
+1773420448 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les6\skibidi.cpp
+	"engine.hpp"
+	<allegro5/allegro_primitives.h>
+	<cstddef>
+	<iostream>
+	<vector>
+	<allegro5/allegro.h>
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\allegro_font.h
+	"allegro5/allegro.h"
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\allegro_image.h
+	"allegro5/base.h"
+
+1769799564 d:\aleksandrs abbas\c++ sem\cpp_prog\allegro\include\allegro5\allegro_ttf.h
+	"allegro5/allegro.h"
+	"allegro5/allegro_font.h"
+
+1772812088 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les6\example_engine_3.cpp
+	"engine.hpp"
+	<allegro5/allegro_primitives.h>
+	<cstddef>
+	<exception>
+	<iostream>
+	<vector>
+
+1772815725 source:d:\aleksandrs abbas\c++ sem\cpp_prog\les6\test.cpp
+	<allegro5/allegro.h>
+	<allegro5/allegro_primitives.h>
+	<iostream>
+	<vector>
+	<cmath>
+
+1774633599 source:d:\aleksandrs abbas\c++ sem\cpp_prog\game\engine.cpp
+	"engine.hpp"
+	<iostream>
+	<allegro5/allegro.h>
+	<allegro5/allegro_image.h>
+	<stdexcept>
+
+1778253018 d:\aleksandrs abbas\c++ sem\cpp_prog\game\engine.hpp
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_primitives.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/color.h>
+	<allegro5/events.h>
+	<allegro5/keyboard.h>
+	<allegro5/mouse.h>
+	<allegro5/system.h>
+	<allegro5/timer.h>
+	<cstddef>
+
+1773424696 source:d:\aleksandrs abbas\c++ sem\cpp_prog\game\main.cpp
+	"game.hpp"
+
+1773424547 d:\aleksandrs abbas\c++ sem\cpp_prog\game\game.hpp
+	"engine.hpp"
+	<vector>
+
+1774028209 source:d:\aleksandrs abbas\c++ sem\cpp_prog\game\game.cpp
+	"engine.hpp"
+	<allegro5/allegro_primitives.h>
+	<iostream>
+	<vector>
+	<allegro5/allegro.h>
+	<unistd.h>
+
+1774034258 source:d:\aleksandrs abbas\c++ sem\cpp_prog\game\testgame.cpp
+	"engine.hpp"
+	<allegro5/allegro_primitives.h>
+	<iostream>
+	<vector>
+	<allegro5/allegro.h>
+	<unistd.h>
+
+1778254680 source:d:\aleksandrs abbas\c++ sem\cpp_prog\game\main-1.cpp
+	"tower_defense.hpp"
+
+1778258479 d:\aleksandrs abbas\c++ sem\cpp_prog\game\tower_defense.hpp
+	"engine.hpp"
+	<allegro5/allegro_primitives.h>
+	<allegro5/allegro_font.h>
+	<vector>
+	<algorithm>
+	<cmath>
+	<cstdio>
+	<iostream>
+	<chrono>
+	<ctime>
+	<thread>
+	<random>
+	<limits>
+
