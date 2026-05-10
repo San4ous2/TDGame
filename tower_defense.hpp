@@ -23,7 +23,9 @@ ALLEGRO_BITMAP* summoner_img = nullptr;
 ALLEGRO_BITMAP* cat_img = nullptr;
 ALLEGRO_BITMAP* menu = nullptr;
 ALLEGRO_FONT* font = nullptr;
-bool is_playing = true;
+bool is_playing = false;
+int mx;
+int my;
 static const int CELL = 32;
 static const int GCOLS = 20;
 static const int GROWS = 8;
@@ -383,7 +385,7 @@ private:
     int vragov_spavneno  = 0;
     float tekst_taymer   = 3.0;
     bool pobeda          = false;
-    bool proigrysh       = false;
+    bool proigrish       = false;
 
     const int   maxVragov[3]     = {10, 15, 20};
     const float intervalSpavna[3]= {2.0, 1.7, 1.4};
@@ -436,13 +438,29 @@ public:
         farm_img    = al_load_bitmap("sprites/Farm.bmp");
         summoner_img= al_load_bitmap("sprites/Summoner.bmp");
         cat_img     = al_load_bitmap("sprites/Summon.bmp");
-        menu     = al_load_bitmap("Menu.bmp");
+        menu     = al_load_bitmap("sprites/Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
     }
 
+    void restart() {
+        pobeda = false;
+        proigrish = false;
+        is_playing = false;
+        uroven = 1;
+        vragov_spavneno = 0;
+        tekst_taymer = 3.0;
+        dengi = 50;
+        zhizni = 10;
+        bashni.clear();
+        shary.clear();
+        streli.clear();
+        koty.clear();
+        vragi.clear();
+    }
+
     void handle_click(int mx, int my, int btn) {
-        if (pobeda || proigrysh) return;
+        if (pobeda || proigrish) return;
 
         if (btn == 1) {
             for (int i = 0; i < 4; i++) {
@@ -471,6 +489,7 @@ public:
     }
 
     void physics_process() override {
+        if(is_playing){
         ALLEGRO_MOUSE_STATE ms;
         al_get_mouse_state(&ms);
         static bool prevL = false, prevR = false;
@@ -480,7 +499,7 @@ public:
         if (curR && !prevR) handle_click(ms.x, ms.y, 2);
         prevL = curL; prevR = curR;
 
-        if (pobeda || proigrysh) return;
+        if (pobeda || proigrish) return;
 
         if (tekst_taymer > 0) tekst_taymer -= 1.0 / Engine::FPS;
 
@@ -515,7 +534,10 @@ public:
             [](Kot& k)   { return !k.zhiv; }), koty.end());
 
         bool vsehSpavnili = vragov_spavneno >= maxVragov[uroven-1];
-        if (vsehSpavnili && vragi.empty()) {
+        if (zhizni <= 0) {
+            proigrish = true;
+        }
+        else if (vsehSpavnili && vragi.empty()) {
             if (uroven < 3) {
                 sleduyushiy_uroven();
             } else {
@@ -523,8 +545,7 @@ public:
             }
         }
 
-        if (zhizni <= 0) {
-            proigrysh = true;
+
         }
     }
     void MGame(){
@@ -611,9 +632,64 @@ public:
             al_draw_text(font, al_map_rgb(200,200,200),
                 320, 135, ALLEGRO_ALIGN_CENTER, podpisi[uroven-1]);
         }
+    }
+    void Menu(){
+        al_draw_filled_rectangle(0,0,640,360,al_map_rgb(189, 107, 0));
+        al_draw_rectangle(3,3,125,69,al_map_rgb(94, 53, 0),3);
+        al_draw_text(font, al_map_rgb(255,255,255),65,10, ALLEGRO_ALIGN_CENTER, "TD++");
+        al_draw_filled_rounded_rectangle(50, 30, 80, 40, 4, 4, al_map_rgb(0,255,0));
+        al_draw_filled_rounded_rectangle(50, 50, 80, 60, 4, 4, al_map_rgb(255,0,0));
+        al_draw_bitmap(cat_img,7,6,0);
+        al_draw_bitmap(cat_img,87,6,0);
+        ALLEGRO_TRANSFORM tr;
+        al_identity_transform(&tr);
+        al_scale_transform(&tr, 5,5);
+        al_use_transform(&tr);
 
-        if (proigrysh) {
-            al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
+
+        ALLEGRO_MOUSE_STATE ms;
+        al_get_mouse_state(&ms);
+        my = al_get_mouse_state_axis(&ms,1);
+        mx = al_get_mouse_state_axis(&ms,0);
+        static bool prevL = false, prevR = false;
+        bool curL = ms.buttons & 1;
+        bool curR = ms.buttons & 2;
+        cout<< "x"<<mx <<","<< "y"<< my<< endl;
+
+        if(my>150 && my< 200){
+            if(mx>250 && mx<400){
+                al_draw_rounded_rectangle(50,30,80,40,4,4,al_map_rgb(255,255,255),1);
+                if(curL && !prevL){
+                    al_identity_transform(&tr);
+                    al_scale_transform(&tr, 1,1);
+                    al_use_transform(&tr);
+                    is_playing = true;
+                }
+            }
+        }
+        if(my > 250 && my<300){
+            if(mx>250 && mx<400){
+                al_draw_rounded_rectangle(50,50,80,60,4,4,al_map_rgb(255,255,255),1);
+                if(curL && !prevL){
+                    Engine::stop();
+                }
+            }
+        }
+
+        if (curL && !prevL){
+            al_draw_rectangle(121,93,221,123,al_map_rgb(255,255,255),4);
+            cout<<"left";
+        }
+        if (curR && !prevR) {
+            cout<< "right";
+        }
+        prevL = curL; prevR = curR;
+
+
+    }
+    void gameo(){
+        al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
+        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
             al_draw_rectangle(130, 90, 510, 185, al_map_rgb(255,50,50), 3);
             if (font) {
                 al_draw_text(font, al_map_rgb(255,50,50),
@@ -623,13 +699,11 @@ public:
                 al_draw_text(font, al_map_rgb(200,200,200),
                     320, 145, ALLEGRO_ALIGN_CENTER, buf);
             }
-            al_draw_filled_rectangle(0, 0, 640, 360, al_map_rgb(0,0,0));
-            this_thread::sleep_for(chrono::seconds(5));
-            Engine::stop();
-        }
-
-        if (pobeda) {
-            al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
+        restart();
+    }
+    void win(){
+        al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
+        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
             al_draw_rectangle(130, 90, 510, 185, al_map_rgb(50,255,100), 3);
             if (font){
                 al_draw_text(font, al_map_rgb(50,255,100),
@@ -641,34 +715,21 @@ public:
                 al_draw_text(font, al_map_rgb(255,230,100),
                     320, 155, ALLEGRO_ALIGN_CENTER, buf);
             }
-            al_draw_filled_rectangle(0, 0, 640, 360, al_map_rgb(0,0,0));
-            this_thread::sleep_for(chrono::seconds(5));
-            Engine::stop();
-        }
-
-
-    }
-    void Menu(){
-        al_draw_bitmap(menu,0, 0, 0);
-
-        /*ALLEGRO_TRANSFORM tr;
-        al_draw_filled_rectangle(0,0,640,360,al_map_rgb(189, 107, 0));
-        al_draw_rectangle(3,3,125,69,al_map_rgb(94, 53, 0),3);
-        al_identity_transform(&tr);
-
-        al_scale_transform(&tr, 5,5);
-        al_use_transform(&tr);
-        al_draw_text(font, al_map_rgb(255,255,255),65,10, ALLEGRO_ALIGN_CENTER, "TD++");
-        al_draw_filled_rounded_rectangle(50, 30, 80, 40, 4, 4, al_map_rgb(0,0,0));*/
-
+            restart();
     }
     void render_process() override {
         load_assets();
-        Menu();
-        if(is_playing){
+        if(!is_playing && !proigrish){
+            Menu();
+        }
+        if(is_playing && !proigrish && !pobeda){
             MGame();
         }
-
-
+        if(proigrish){
+            gameo();
+        }
+        if(pobeda){
+            win();
+        }
     }
 };
