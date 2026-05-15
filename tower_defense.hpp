@@ -689,8 +689,8 @@ public:
     }
     void gameo(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
-        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 185, al_map_rgb(255,50,50), 3);
+        al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
+            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(255,50,50), 3);
             if (font) {
                 al_draw_text(font, al_map_rgb(255,50,50),
                     320, 115, ALLEGRO_ALIGN_CENTER, "Game Over");
@@ -699,12 +699,32 @@ public:
                 al_draw_text(font, al_map_rgb(200,200,200),
                     320, 145, ALLEGRO_ALIGN_CENTER, buf);
             }
-        restart();
+
+        al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
+        if (font) {
+            al_draw_text(font, al_map_rgb(255,255,255),
+                320, 215, ALLEGRO_ALIGN_CENTER, "Restart");
+        }
+
+        ALLEGRO_MOUSE_STATE ms;
+        al_get_mouse_state(&ms);
+        static bool prevL = false;
+        bool curL = ms.buttons & 1;
+
+        if (ms.x >= 240 && ms.x <= 400 && ms.y >= 200 && ms.y <= 240) {
+            al_draw_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(255,255,255), 3);
+            if (curL && !prevL) {
+                restart();
+                CURRENT_MAP = MAP1;
+                CURRENT_WAYPOINTS = &WAYPOINTS1;
+            }
+        }
+        prevL = curL;
     }
     void win(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
-        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 185, al_map_rgb(50,255,100), 3);
+        al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
+            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(50,255,100), 3);
             if (font){
                 al_draw_text(font, al_map_rgb(50,255,100),
                     320, 110, ALLEGRO_ALIGN_CENTER, "You Win!");
@@ -715,7 +735,27 @@ public:
                 al_draw_text(font, al_map_rgb(255,230,100),
                     320, 155, ALLEGRO_ALIGN_CENTER, buf);
             }
-            restart();
+
+        al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
+        if (font) {
+            al_draw_text(font, al_map_rgb(255,255,255),
+                320, 215, ALLEGRO_ALIGN_CENTER, "Restart");
+        }
+
+        ALLEGRO_MOUSE_STATE ms;
+        al_get_mouse_state(&ms);
+        static bool prevL = false;
+        bool curL = ms.buttons & 1;
+
+        if (ms.x >= 240 && ms.x <= 400 && ms.y >= 200 && ms.y <= 240) {
+            al_draw_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(255,255,255), 3);
+            if (curL && !prevL) {
+                restart();
+                CURRENT_MAP = MAP1;
+                CURRENT_WAYPOINTS = &WAYPOINTS1;
+            }
+        }
+        prevL = curL;
     }
     void render_process() override {
         load_assets();
