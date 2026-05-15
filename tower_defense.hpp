@@ -438,7 +438,6 @@ public:
         farm_img    = al_load_bitmap("sprites/Farm.bmp");
         summoner_img= al_load_bitmap("sprites/Summoner.bmp");
         cat_img     = al_load_bitmap("sprites/Summon.bmp");
-        menu     = al_load_bitmap("sprites/Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
     }
