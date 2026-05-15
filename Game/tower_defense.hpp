@@ -102,8 +102,8 @@ const int (*CURRENT_MAP)[GCOLS] = MAP1;
 const vector<pair<int,int>>* CURRENT_WAYPOINTS = &WAYPOINTS1;
 
 
-static float cell_cx(int c) { return c * CELL + CELL * 0.5f; }
-static float cell_cy(int r) { return r * CELL + CELL * 0.5f; }
+static float cell_cx(int c) { return c * CELL + CELL * 0.5; }
+static float cell_cy(int r) { return r * CELL + CELL * 0.5; }
 static float dist2(float ax, float ay, float bx, float by) {
     return (ax-bx)*(ax-bx) + (ay-by)*(ay-by);
 }
@@ -334,7 +334,7 @@ struct Tower {
             if (atacTimer <= 0) {
                 Vrag* v = blizhaishiy(vragi, 120);
                 if (v) {
-                    streli.emplace_back(cx(), cy(), v, 3);
+                    streli.emplace_back(cx(), cy(), v, 1);
                     atacTimer = 0.8;
                 }
             }
@@ -438,9 +438,25 @@ public:
         farm_img    = al_load_bitmap("Game/sprites/Farm.bmp");
         summoner_img= al_load_bitmap("Game/sprites/Summoner.bmp");
         cat_img     = al_load_bitmap("Game/sprites/Summon.bmp");
-        menu     = al_load_bitmap("Game/Menu.bmp");
+        menu     = al_load_bitmap("Game/sprites/Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
+    }
+
+    void restart() {
+        pobeda = false;
+        proigrish = false;
+        is_playing = false;
+        uroven = 1;
+        vragov_spavneno = 0;
+        tekst_taymer = 3.0;
+        dengi = 50;
+        zhizni = 10;
+        bashni.clear();
+        shary.clear();
+        streli.clear();
+        koty.clear();
+        vragi.clear();
     }
 
     void handle_click(int mx, int my, int btn) {
@@ -673,8 +689,8 @@ public:
     }
     void gameo(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
-        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 185, al_map_rgb(255,50,50), 3);
+        al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
+            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(255,50,50), 3);
             if (font) {
                 al_draw_text(font, al_map_rgb(255,50,50),
                     320, 115, ALLEGRO_ALIGN_CENTER, "Game Over");
@@ -683,11 +699,32 @@ public:
                 al_draw_text(font, al_map_rgb(200,200,200),
                     320, 145, ALLEGRO_ALIGN_CENTER, buf);
             }
+
+        al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
+        if (font) {
+            al_draw_text(font, al_map_rgb(255,255,255),
+                320, 215, ALLEGRO_ALIGN_CENTER, "Restart");
+        }
+
+        ALLEGRO_MOUSE_STATE ms;
+        al_get_mouse_state(&ms);
+        static bool prevL = false;
+        bool curL = ms.buttons & 1;
+
+        if (ms.x >= 240 && ms.x <= 400 && ms.y >= 200 && ms.y <= 240) {
+            al_draw_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(255,255,255), 3);
+            if (curL && !prevL) {
+                restart();
+                CURRENT_MAP = MAP1;
+                CURRENT_WAYPOINTS = &WAYPOINTS1;
+            }
+        }
+        prevL = curL;
     }
     void win(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
-        al_draw_filled_rectangle(130, 90, 510, 185, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 185, al_map_rgb(50,255,100), 3);
+        al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
+            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(50,255,100), 3);
             if (font){
                 al_draw_text(font, al_map_rgb(50,255,100),
                     320, 110, ALLEGRO_ALIGN_CENTER, "You Win!");
@@ -698,6 +735,27 @@ public:
                 al_draw_text(font, al_map_rgb(255,230,100),
                     320, 155, ALLEGRO_ALIGN_CENTER, buf);
             }
+
+        al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
+        if (font) {
+            al_draw_text(font, al_map_rgb(255,255,255),
+                320, 215, ALLEGRO_ALIGN_CENTER, "Restart");
+        }
+
+        ALLEGRO_MOUSE_STATE ms;
+        al_get_mouse_state(&ms);
+        static bool prevL = false;
+        bool curL = ms.buttons & 1;
+
+        if (ms.x >= 240 && ms.x <= 400 && ms.y >= 200 && ms.y <= 240) {
+            al_draw_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(255,255,255), 3);
+            if (curL && !prevL) {
+                restart();
+                CURRENT_MAP = MAP1;
+                CURRENT_WAYPOINTS = &WAYPOINTS1;
+            }
+        }
+        prevL = curL;
     }
     void render_process() override {
         load_assets();
