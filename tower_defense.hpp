@@ -334,7 +334,7 @@ struct Tower {
             if (atacTimer <= 0) {
                 Vrag* v = blizhaishiy(vragi, 120);
                 if (v) {
-                    streli.emplace_back(cx(), cy(), v, 3);
+                    streli.emplace_back(cx(), cy(), v, 1);
                     atacTimer = 0.8;
                 }
             }
