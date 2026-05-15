@@ -66,6 +66,28 @@ static const int MAP3[GROWS][GCOLS] = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 };
 
+static const int MAP4[GROWS][GCOLS] = {
+    {1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0},
+    {0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0},
+    {0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0},
+    {0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0},
+    {1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0},
+    {0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1},
+    {0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0},
+    {0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0},
+};
+
+static const int MAP5[GROWS][GCOLS] = {
+    {1,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1},
+    {0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1},
+    {0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1},
+    {0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1},
+    {0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1},
+    {0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1},
+    {0,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1},
+    {0,0,0,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1}
+};
+
 
 static const vector<pair<int,int>> WAYPOINTS1 = {
     {0,0},{1,0},{2,0},{3,0},
@@ -98,6 +120,29 @@ static const vector<pair<int,int>> WAYPOINTS3 = {
     {16,6},{17,6},{18,6},{19,6}
 };
 
+static const vector<pair<int,int>> WAYPOINTS4 = {
+    {0,0}, {1,1}, {2,2}, {3,3}, {4,4}, {5,5}, {6,6}, {7,7},
+    {8,6}, {9,5}, {10,4}, {11,3}, {12,2}, {13,1}, {14,0},
+    {15,1}, {16,2}, {17,3}, {18,4}, {19,5},
+    {18,6}, {17,7},
+    {16,6}, {15,5}, {14,4}, {13,3}, {12,2}, {11,1}, {10,0},
+    {9,1}, {8,2}, {7,3}, {6,4}, {5,5}, {4,6}, {3,7},
+    {2,6}, {1,5}, {0,4}
+};
+
+static const vector<pair<int,int>> WAYPOINTS5 = {
+    {0,0}, {1,1}, {2,2}, {3,3}, {4,4}, {5,5}, {6,6}, {7,7},
+    {8,6}, {9,5}, {10,4}, {11,3}, {12,2}, {13,1}, {14,0},
+    {15,0}, {16,0}, {17,0}, {18,0}, {19,0},
+    {19,1}, {19,2}, {19,3}, {19,4}, {19,5}, {19,6}, {19,7},
+    {18,7}, {17,7}, {16,7}, {15,7}, {14,7},
+    {13,6}, {12,5}, {11,4}, {10,3}, {9,2}, {8,1}, {7,0},
+    {6,0}, {5,0}, {4,0}, {3,0}, {2,0},
+    {2,1}, {2,2}, {2,3}, {2,4}, {2,5},
+    {3,6}, {4,7}, {5,7}, {6,7}, {7,7}, {8,7}, {9,7}, {10,7}, {11,7}
+};
+
+
 const int (*CURRENT_MAP)[GCOLS] = MAP1;
 const vector<pair<int,int>>* CURRENT_WAYPOINTS = &WAYPOINTS1;
 
@@ -127,8 +172,12 @@ struct Vrag {
             skorost = 1.5; hp = 5; maxHp = 5;
         } else if (lvl == 2) {
             skorost = 2.0; hp = 8; maxHp = 8;
-        } else {
+        } else if (lvl == 3) {
             skorost = 2.5; hp = 12; maxHp = 12;
+        } else if (lvl == 4) {
+            skorost = 2.8; hp = 16; maxHp = 16;
+        } else {
+            skorost = 3.2; hp = 22; maxHp = 22;
         }
     }
 
@@ -293,13 +342,10 @@ enum TowerType { NONE=-1, WIZARD, ARCHER, FARM, SUMMONER };
 struct Tower {
     int col, row;
     TowerType type;
-    float atacTimer;
-    float farmTimer;
-    float summonTimer;
+    float timer;
 
-    Tower(int c, int r, TowerType t) : col(c), row(r), type(t) {
-        atacTimer = 0; farmTimer = 0; summonTimer = 0;
-    }
+    Tower(int c, int r, TowerType t) : col(c), row(r), type(t), timer(0) {}
+    virtual ~Tower() {}
 
     float cx() { return col*CELL + CELL*0.5; }
     float cy() { return row*CELL + CELL*0.5; }
@@ -314,65 +360,93 @@ struct Tower {
         }
         return res;
     }
+    virtual void update(vector<Vrag>& vragi, vector<Shar>& shary,
+                        vector<Strela>& streli, vector<Kot>& koty,
+                        int& dengi) {
+        timer -= 1.0/60.0;
+    }
 
-    void update(vector<Vrag>& vragi, vector<Shar>& shary,
-                vector<Strela>& streli, vector<Kot>& koty,
-                int& dengi) {
-        atacTimer  -= 1.0/60.0;
-        farmTimer  -= 1.0/60.0;
-        summonTimer -= 1.0/60.0;
+    virtual void draw() = 0;
+};
 
-        if (type == WIZARD) {
-            if (atacTimer <= 0) {
-                Vrag* v = blizhaishiy(vragi, 100);
-                if (v) {
-                    shary.emplace_back(cx(), cy(), v->x, v->y, 2, 40.0);
-                    atacTimer = 1.5;
-                }
-            }
-        } else if (type == ARCHER) {
-            if (atacTimer <= 0) {
-                Vrag* v = blizhaishiy(vragi, 120);
-                if (v) {
-                    streli.emplace_back(cx(), cy(), v, 1);
-                    atacTimer = 0.8;
-                }
-            }
-        } else if (type == FARM) {
-            if (farmTimer <= 0) {
-                if(dist(gen) == 67){
-                    dengi +=67;
-                }
-                dengi += 6;
-                farmTimer = 5.0;
-            }
-        } else if (type == SUMMONER) {
-            if (summonTimer <= 0) {
-                int lastWp = (int)CURRENT_WAYPOINTS->size() - 1;
-                koty.emplace_back(lastWp);
-                summonTimer = 8.0;
+struct Wizard : public Tower {
+    Wizard(int c, int r) : Tower(c, r, WIZARD) {}
+
+    void update(vector<Vrag>& vragi, vector<Shar>& shary, vector<Strela>& streli, vector<Kot>& koty, int& dengi) override {
+        Tower::update(vragi, shary, streli, koty, dengi);
+        if (timer <= 0) {
+            Vrag* v = blizhaishiy(vragi, 100);
+            if (v) {
+                shary.emplace_back(cx(), cy(), v->x, v->y, 2, 40.0);
+                timer = 1.5;
             }
         }
     }
+    void draw() override {
+        if (wizard_img) al_draw_bitmap(wizard_img, col*CELL, row*CELL, 0);
+    }
+};
 
-    void draw() {
-        ALLEGRO_BITMAP* img = nullptr;
-        if (type == WIZARD)   img = wizard_img;
-        else if (type == ARCHER)   img = archer_img;
-        else if (type == FARM)     img = farm_img;
-        else if (type == SUMMONER) img = summoner_img;
-        if (img) al_draw_bitmap(img, col*CELL, row*CELL, 0);
+struct Archer : public Tower {
+    Archer(int c, int r) : Tower(c, r, ARCHER) {}
+
+    void update(vector<Vrag>& vragi, vector<Shar>& shary, vector<Strela>& streli, vector<Kot>& koty, int& dengi) override {
+        Tower::update(vragi, shary, streli, koty, dengi);
+        if (timer <= 0) {
+            Vrag* v = blizhaishiy(vragi, 120);
+            if (v) {
+                streli.emplace_back(cx(), cy(), v, 1);
+                timer = 0.8;
+            }
+        }
+    }
+    void draw() override {
+        if (archer_img) al_draw_bitmap(archer_img, col*CELL, row*CELL, 0);
+    }
+};
+
+struct Farm : public Tower {
+    Farm(int c, int r) : Tower(c, r, FARM) {}
+
+    void update(vector<Vrag>& vragi, vector<Shar>& shary, vector<Strela>& streli, vector<Kot>& koty, int& dengi) override {
+        Tower::update(vragi, shary, streli, koty, dengi);
+        if (timer <= 0) {
+            if (dist(gen) == 67) {
+                dengi += 67;
+            }
+            dengi += 6;
+            timer = 5.0;
+        }
+    }
+    void draw() override {
+        if (farm_img) al_draw_bitmap(farm_img, col*CELL, row*CELL, 0);
+    }
+};
+
+struct Summoner : public Tower {
+    Summoner(int c, int r) : Tower(c, r, SUMMONER) {}
+
+    void update(vector<Vrag>& vragi, vector<Shar>& shary, vector<Strela>& streli, vector<Kot>& koty, int& dengi) override {
+        Tower::update(vragi, shary, streli, koty, dengi);
+        if (timer <= 0) {
+            int lastWp = (int)CURRENT_WAYPOINTS->size() - 1;
+            koty.emplace_back(lastWp);
+            timer = 8.0;
+        }
+    }
+    void draw() override {
+        if (summoner_img) al_draw_bitmap(summoner_img, col*CELL, row*CELL, 0);
     }
 };
 
 
 class TowerDefense : public Engine {
 private:
-    vector<Vrag>  vragi;
-    vector<Tower> bashni;
-    vector<Shar>  shary;
-    vector<Strela> streli;
-    vector<Kot>   koty;
+    vector<Vrag>    vragi;
+    vector<Tower*>  bashni;
+    vector<Shar>    shary;
+    vector<Strela>  streli;
+    vector<Kot>     koty;
 
     float taymerSpavna  = 2.0;
     bool  assets_loaded = false;
@@ -387,15 +461,15 @@ private:
     bool pobeda          = false;
     bool proigrish       = false;
 
-    const int   maxVragov[3]     = {10, 15, 20};
-    const float intervalSpavna[3]= {2.0, 1.7, 1.4};
+    const int   maxVragov[5]      = {10, 15, 20, 25, 30};
+    const float intervalSpavna[5] = {2.0, 1.7, 1.4, 1.2, 1.0};
 
-    const int  STOIMOST[4]  = {30, 20, 25, 40};
-    const char* NAZVANIYA[4] = {"Wizzard", "Archer", "Farm", "Summoner"};
+    const int   STOIMOST[4]  = {30, 20, 25, 40};
+    const char* NAZVANIYA[4] = {"Wizard", "Archer", "Farm", "Summoner"};
 
     bool isTowerAt(int c, int r) {
-        for (auto& t : bashni)
-            if (t.col == c && t.row == r) return true;
+        for (auto t : bashni)
+            if (t->col == c && t->row == r) return true;
         return false;
     }
 
@@ -406,6 +480,7 @@ private:
         tekst_taymer    = 3.0;
 
         bashni.clear();
+
         shary.clear();
         streli.clear();
         koty.clear();
@@ -419,6 +494,12 @@ private:
         } else if (uroven == 3) {
             CURRENT_MAP       = MAP3;
             CURRENT_WAYPOINTS = &WAYPOINTS3;
+        } else if (uroven == 4) {
+            CURRENT_MAP       = MAP4;
+            CURRENT_WAYPOINTS = &WAYPOINTS4;
+        } else if (uroven == 5) {
+            CURRENT_MAP       = MAP5;
+            CURRENT_WAYPOINTS = &WAYPOINTS5;
         }
     }
 
@@ -438,7 +519,6 @@ public:
         farm_img    = al_load_bitmap("Game/sprites/Farm.bmp");
         summoner_img= al_load_bitmap("Game/sprites/Summoner.bmp");
         cat_img     = al_load_bitmap("Game/sprites/Summon.bmp");
-        menu     = al_load_bitmap("Game/sprites/Menu.bmp");
         font        = al_create_builtin_font();
         assets_loaded = true;
     }
@@ -452,7 +532,10 @@ public:
         tekst_taymer = 3.0;
         dengi = 50;
         zhizni = 10;
+
+        for (auto t : bashni) delete t;
         bashni.clear();
+
         shary.clear();
         streli.clear();
         koty.clear();
@@ -477,7 +560,11 @@ public:
                 && vybrannyType != NONE && !isTowerAt(c, r)) {
                 int cost = STOIMOST[(int)vybrannyType];
                 if (dengi >= cost) {
-                    bashni.emplace_back(c, r, vybrannyType);
+                    if (vybrannyType == WIZARD)      bashni.push_back(new Wizard(c, r));
+                    else if (vybrannyType == ARCHER) bashni.push_back(new Archer(c, r));
+                    else if (vybrannyType == FARM)   bashni.push_back(new Farm(c, r));
+                    else if (vybrannyType == SUMMONER) bashni.push_back(new Summoner(c, r));
+
                     dengi -= cost;
                 }
             }
@@ -511,7 +598,7 @@ public:
         }
 
         for (auto& v : vragi) v.update();
-        for (auto& t : bashni) t.update(vragi, shary, streli, koty, dengi);
+        for (auto t : bashni) t->update(vragi, shary, streli, koty, dengi); // Вызов через ->
         for (auto& s : shary)  s.update(vragi);
         for (auto& a : streli) a.update();
         for (auto& k : koty)   k.update(vragi);
@@ -538,16 +625,15 @@ public:
             proigrish = true;
         }
         else if (vsehSpavnili && vragi.empty()) {
-            if (uroven < 3) {
+            if (uroven < 5) {
                 sleduyushiy_uroven();
             } else {
                 pobeda = true;
             }
         }
-
-
         }
     }
+
     void MGame(){
         for (int r = 0; r < GROWS; r++)
             for (int c = 0; c < GCOLS; c++)
@@ -556,7 +642,7 @@ public:
                 else
                     al_draw_bitmap(grass, c*CELL, r*CELL, 0);
 
-        for (auto& t : bashni)  t.draw();
+        for (auto t : bashni)  t->draw();
         for (auto& s : shary)   s.draw();
         for (auto& a : streli)  a.draw();
         for (auto& k : koty)    k.draw();
@@ -606,7 +692,7 @@ public:
             int total = maxVragov[uroven-1];
             int ubito  = vragov_spavneno - (int)vragi.size();
             if (ubito < 0) ubito = 0;
-            sprintf(buf, "Level: %d/3   Enemies: %d/%d", uroven, ubito, total);
+            sprintf(buf, "Level: %d/5   Enemies: %d/%d", uroven, ubito, total);
             al_draw_text(font, al_map_rgb(180,220,180), 200, 308, 0, buf);
 
             al_draw_text(font, al_map_rgb(150,150,150), 200, 325, 0,
@@ -624,10 +710,12 @@ public:
             al_draw_text(font, al_map_rgb(255,200,50),
                 320, 115, ALLEGRO_ALIGN_CENTER, buf);
 
-            const char* podpisi[3] = {
+            const char* podpisi[5] = {
                 "10 enemies",
                 "15 faster enemies  +50$",
-                "20 strong enemies  +50$"
+                "20 strong enemies  +50$",
+                "25 chaotic enemies +50$",
+                "30 boss rush level +50$"
             };
             al_draw_text(font, al_map_rgb(200,200,200),
                 320, 135, ALLEGRO_ALIGN_CENTER, podpisi[uroven-1]);
@@ -684,21 +772,20 @@ public:
             cout<< "right";
         }
         prevL = curL; prevR = curR;
-
-
     }
+
     void gameo(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
         al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(255,50,50), 3);
-            if (font) {
-                al_draw_text(font, al_map_rgb(255,50,50),
-                    320, 115, ALLEGRO_ALIGN_CENTER, "Game Over");
-                char buf[32];
-                sprintf(buf, "Level reached: %d / 3", uroven);
-                al_draw_text(font, al_map_rgb(200,200,200),
-                    320, 145, ALLEGRO_ALIGN_CENTER, buf);
-            }
+        al_draw_rectangle(130, 90, 510, 270, al_map_rgb(255,50,50), 3);
+        if (font) {
+            al_draw_text(font, al_map_rgb(255,50,50),
+                320, 115, ALLEGRO_ALIGN_CENTER, "Game Over");
+            char buf[32];
+            sprintf(buf, "Level reached: %d / 5", uroven);
+            al_draw_text(font, al_map_rgb(200,200,200),
+                320, 145, ALLEGRO_ALIGN_CENTER, buf);
+        }
 
         al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
         if (font) {
@@ -721,20 +808,21 @@ public:
         }
         prevL = curL;
     }
+
     void win(){
         al_draw_filled_rectangle(0,0,640,360,al_map_rgb(0,0,0));
         al_draw_filled_rectangle(130, 90, 510, 270, al_map_rgb(0,0,0));
-            al_draw_rectangle(130, 90, 510, 270, al_map_rgb(50,255,100), 3);
-            if (font){
-                al_draw_text(font, al_map_rgb(50,255,100),
-                    320, 110, ALLEGRO_ALIGN_CENTER, "You Win!");
-                al_draw_text(font, al_map_rgb(200,200,200),
-                    320, 135, ALLEGRO_ALIGN_CENTER, "All 3 levels cleared!");
-                char buf[32];
-                sprintf(buf, "Money left: %d$", dengi);
-                al_draw_text(font, al_map_rgb(255,230,100),
-                    320, 155, ALLEGRO_ALIGN_CENTER, buf);
-            }
+        al_draw_rectangle(130, 90, 510, 270, al_map_rgb(50,255,100), 3);
+        if (font){
+            al_draw_text(font, al_map_rgb(50,255,100),
+                320, 110, ALLEGRO_ALIGN_CENTER, "You Win!");
+            al_draw_text(font, al_map_rgb(200,200,200),
+                320, 135, ALLEGRO_ALIGN_CENTER, "All 5 levels cleared!");
+            char buf[32];
+            sprintf(buf, "Money left: %d$", dengi);
+            al_draw_text(font, al_map_rgb(255,230,100),
+                320, 155, ALLEGRO_ALIGN_CENTER, buf);
+        }
 
         al_draw_filled_rounded_rectangle(240, 200, 400, 240, 6, 6, al_map_rgb(100,180,80));
         if (font) {
@@ -757,6 +845,7 @@ public:
         }
         prevL = curL;
     }
+
     void render_process() override {
         load_assets();
         if(!is_playing && !proigrish){
